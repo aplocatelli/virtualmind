@@ -1,3 +1,13 @@
+class BigForm extends React.Component {
+  render() {
+    const checkboxes = [0, 1, 2];
+
+    return (
+      <Form checkboxes={checkboxes} />
+    );
+  }
+}
+
 function Form(props) {
   return (
     props.checkboxes.map(id => <Checkbox key={id} id={id}/>)
@@ -20,9 +30,7 @@ class Checkbox extends React.Component {
   }
 }
 
-const checkboxes = [0, 1, 2];
-
 ReactDOM.render(
-  <Form checkboxes={checkboxes} />,
+  <BigForm />,
   document.getElementById('container')
 );
