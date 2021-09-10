@@ -3,7 +3,7 @@ class BigForm extends React.Component {
     const checkboxes = [0, 1, 2];
 
     return (
-      <Form checkboxes={checkboxes} />
+        <Form checkboxes={checkboxes} />
     );
   }
 }
@@ -31,6 +31,9 @@ class Checkbox extends React.Component {
 }
 
 ReactDOM.render(
-  <BigForm />,
+  <div className="form">
+    <span>Checked boxes: </span>
+    <BigForm />
+  </div>,
   document.getElementById('container')
 );
