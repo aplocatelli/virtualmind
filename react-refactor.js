@@ -1,67 +1,28 @@
-// This is a react component that is technically functional,
-// but would be very hard to maintain because of it's size.
-
-// It's easier to write tests for smaller components that pass
-// data between them. Rewrite this component so that it could be
-// rendered from somewhere else by using these lines.
-
-// const checkboxes = [0, 1, 2];
-
-// <Form>
-// 	checkboxes.map(id =>
-// 		<Checkbox key={id} id={id}/>
-// 	)
-// </Form>
-
-// or (easier but less impresive)
-
-// <Form checkboxes={checkboxes} />
-
-// If you decide to do the second option you MUST STILL create and
-// render a Checkbox Component inside the Form Component
-
-class BigForm extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			checked: [false, false, false]
-		};
-	}
-
-	checkboxOnCheck(id) {
-		const checked = this.state.checked.map((value, index) => {
-			if(id === index) {
-				return !value;
-			}
-			return value;
-		});
-
-		this.setState({ checked });
-	}
-
-	render() {
-		const checked = this.state.checked
-		return (
-			<div className="form">
-				<span>Checked boxes: {checked}</span>
-				<div className="checkbox-wrapper">
-					<span>checkbox 0</span>
-					<input value={checked[0]} onChange={this.checkboxOnCheck(0)} type="checkbox" />
-				</div>
-				<div className="checkbox-wrapper">
-					<span>checkbox 1</span>
-					<input value={checked[1]} onChange={this.checkboxOnCheck(1)} type="checkbox" />
-				</div>
-				<div className="checkbox-wrapper">
-					<span>checkbox 2</span>
-					<input value={checked[2]} onChange={this.checkboxOnCheck(2)} type="checkbox" />
-				</div>
-			</div>
-		)
-	}
+function Form(props) {
+  return (
+    props.checkboxes.map(id => <Checkbox key={id} id={id}/>)
+  );
 }
 
+class Checkbox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { checked: false };
+  }
+
+  render() {
+    return (
+      <div className="checkbox-wrapper">
+        <span>checkbox {this.props.id}</span>
+        <input value={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked })} type="checkbox" />
+      </div>
+    );
+  }
+}
+
+const checkboxes = [0, 1, 2];
+
 ReactDOM.render(
-  <BigForm />,
+  <Form checkboxes={checkboxes} />,
   document.getElementById('container')
 );
