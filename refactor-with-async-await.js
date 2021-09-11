@@ -1,10 +1,10 @@
 var PlayerService = {
     getPlayerTeamId: function(playerId) {
-        return fetch("/player/" + playerId + "/team"); //fetch returns a promise
+        return fetch("/player/" + playerId + "/team");  //fetch returns a promise
     },
 
     getPlayers: function(teamId) {
-        return fetch("/team/" + teamId + "/player"); //fetch returns a promise
+        return fetch("/team/" + teamId + "/player");    //fetch returns a promise
     }
 }
 
@@ -12,9 +12,16 @@ var PlayerService = {
 var PlayerDetailsController = {
     playerId: 8,
     showTeammatesClick: async function() {
-        let teamId = await PlayerService.getPlayerTeamId(this.playerId);
-        let playerList = await PlayerService.getPlayers(teamId.id);
-        console.log(playerList);
+        try {
+            let responseTeam    = await PlayerService.getPlayerTeamId(this.playerId);   //wait for the getPlayerTeamId to return a response
+            let teamId          = await responseTeam.json();                            //then wait for it to parse as a JSON
+            let responsePlayers = await PlayerService.getPlayers(teamId.id);            //then wait for the getPlayers to return a response
+            let playerList      = await responsePlayers.json();                         //then wait for it to parse as a JSON
+            console.log(playerList);                                                    //then finally prints it to the console
+
+        } catch (e) {
+            console.log("There was an error.", e);                                      //if there's an error at any stage, console log error message
+        }
     }
 };
 
