@@ -1,3 +1,4 @@
+//initial array of objects
 let newItems = [
     {
         network: 'facebook',
@@ -18,7 +19,7 @@ let newItems = [
 ]
  
 //Returns the display name of a social network accordingly to some parameter  
-let getDisplayName = (network) => {
+let getDisplayName = network => {
     switch(network) {
         case "facebook":
             return "Facebook";
@@ -32,10 +33,9 @@ let getDisplayName = (network) => {
 }
   
 let foo = (arrayOfItems, aNetwork) => {
-    //Filter only items whose network property equals to aNetwork and creates a new array
-    let filteredArray = arrayOfItems.filter(item => item.network === aNetwork);
+    let filteredArray = arrayOfItems.filter(item => item.network === aNetwork); //Filter only items whose network property equals to aNetwork and returns a new array
     
-    //Creates a new array from the previously filtered, because the new array has a different property: displayName
+    //Creates a new array from the previously filtered, because the new array has to use a different property: displayName
     let newArray = filteredArray.map(item => {      
         let newNetworkObj = {
             displayName: getDisplayName(item.network),
@@ -47,6 +47,7 @@ let foo = (arrayOfItems, aNetwork) => {
     
     return newArray;
 }
-  
+
 console.log(foo(newItems, 'facebook'));
 console.log(foo(newItems, 'gplus'));
+console.log(foo(newItems, 'twitter'));
