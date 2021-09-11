@@ -7,7 +7,9 @@ class BigForm extends Component {
     const checkboxes = [0, 1, 2];
 
     return(
-        <Form checkboxes={checkboxes} />
+      <Form>
+        {checkboxes.map(id => <Checkbox key={id} id={id}/>)}
+      </Form>
     );
   }
 }
@@ -47,11 +49,18 @@ class Form extends Component {
 
   //displays the amount of checked checkboxes and, for each id in the checkboxes array, creates its own component
   render() {
+
+    //the form component receives the checkboxes as children, thus the need to map this children. Additionally, we need to add some other properties to the checkbox, this is done using the clone method
     return (
       <div className="form">
         <span>Checked boxes: {this.getCheckedBoxes()}</span> 
-        {this.props.checkboxes.map(id => 
-          <Checkbox key={id} id={id} stateValue={this.state.checked[id]} onCheckboxChange={this.handleCheckboxChange}/>)} 
+
+        {React.Children.map(this.props.children, (child, index) => {
+          return React.cloneElement(child, {
+            stateValue: this.state.checked[index],
+            onCheckboxChange: this.handleCheckboxChange
+          })
+        })}
       </div>
     );
   }
