@@ -1,10 +1,10 @@
 var PlayerService = {
     getPlayerTeamId: function(playerId) {
-        return Promise.resolve($.ajax("/player/" + playerId + "/team")); //ajax already returns a thenable
+        return fetch("/player/" + playerId + "/team"); //fetch returns a promise
     },
 
     getPlayers: function(teamId) {
-        return Promise.resolve($.ajax("/team/" + teamId + "/player")); //ajax already returns a thenable
+        return fetch("/team/" + teamId + "/player"); //fetch returns a promise
     }
 }
 
