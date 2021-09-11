@@ -1,39 +1,76 @@
-class BigForm extends React.Component {
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
+class BigForm extends Component {
   render() {
     const checkboxes = [0, 1, 2];
 
-    return (
+    return(
         <Form checkboxes={checkboxes} />
     );
   }
 }
 
-function Form(props) {
-  return (
-    props.checkboxes.map(id => <Checkbox key={id} id={id}/>)
-  );
-}
-
-class Checkbox extends React.Component {
+class Form extends Component {
   constructor(props) {
     super(props);
-    this.state = { checked: false };
+    this.state = {
+      checked: [false, false, false]
+    }
+
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+  }
+
+  handleCheckboxChange(checkboxId) {
+    let newCheckedValues = this.state.checked.map((checkboxState, index) => {
+      if(index === checkboxId) {
+        return !checkboxState;
+      }
+      return checkboxState;
+    });
+
+    this.setState({
+      checked: newCheckedValues
+    });
+  }
+
+  getCheckedBoxes() {
+    let checkedBoxes = this.state.checked.filter(item => item === true);
+    return checkedBoxes.length;
+  }
+
+  render() {
+    return (
+      <div className="form">
+        <span>Checked boxes: {this.getCheckedBoxes()}</span>
+        {this.props.checkboxes.map(id => 
+          <Checkbox key={id} id={id} stateValue={this.state.checked[id]} onCheckboxChange={this.handleCheckboxChange}/>)}
+      </div>
+    );
+  }
+}
+
+class Checkbox extends Component {
+  constructor(props) {
+    super(props);
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
+  }
+
+  handleCheckboxChange(e) {
+    this.props.onCheckboxChange(this.props.id);
   }
 
   render() {
     return (
       <div className="checkbox-wrapper">
         <span>checkbox {this.props.id}</span>
-        <input value={this.state.checked} onChange={() => this.setState({ checked: !this.state.checked })} type="checkbox" />
+        <input value={this.props.stateValue} onChange={this.handleCheckboxChange} type="checkbox" />
       </div>
     );
   }
 }
 
 ReactDOM.render(
-  <div className="form">
-    <span>Checked boxes: </span>
-    <BigForm />
-  </div>,
+  <BigForm />,
   document.getElementById('container')
 );
