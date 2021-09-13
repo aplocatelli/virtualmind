@@ -1,9 +1,9 @@
 var PlayerService = {
-    getPlayerTeamId: function(playerId) {
+    getPlayerTeamId: playerId => {
         return fetch("/player/" + playerId + "/team");  //fetch returns a promise
     },
 
-    getPlayers: function(teamId) {
+    getPlayers: teamId => {
         return fetch("/team/" + teamId + "/player");    //fetch returns a promise
     }
 }
@@ -11,7 +11,7 @@ var PlayerService = {
 //Get team id using the player id, then get all players that belong to that team and prints the list to the console
 var PlayerDetailsController = {
     playerId: 8,
-    showTeammatesClick: async function() {
+    showTeammatesClick: async () => {
         try {
             let responseTeam    = await PlayerService.getPlayerTeamId(this.playerId);   //wait for the getPlayerTeamId to return a response
             let teamId          = await responseTeam.json();                            //then wait for it to parse as a JSON
