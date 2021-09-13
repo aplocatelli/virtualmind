@@ -1,9 +1,9 @@
 var PlayerService = {
-    getPlayerTeamId: function(playerId) {
+    getPlayerTeamId: playerId => {
         return fetch("/player/" + playerId + "/team");  //fetch returns a promise
     },
 
-    getPlayers: function(teamId) {
+    getPlayers: teamId => {
         return fetch("/team/" + teamId + "/player");    //fetch returns a promise
     }
 }
@@ -11,7 +11,7 @@ var PlayerService = {
 //Get team id using the player id, then get all players that belong to that team and prints the list to the console
 var PlayerDetailsController = {
     playerId: 8,
-    showTeammatesClick: function() {
+    showTeammatesClick: () => {
         PlayerService.getPlayerTeamId(this.playerId)                //call getPlayerTeamId to find out the team id
         .then(responseTeam => responseTeam.json())                  //when the promise returned by getPlayerTeamId resolves, parse it as a JSON
         .then(team => PlayerService.getPlayers(team.id))            //then use the team id to call getPlayers 
