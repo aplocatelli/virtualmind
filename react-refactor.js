@@ -23,10 +23,7 @@ function Form(props) {
     
     //for each state, verify if it belongs to the changed checkbox and in case it does, toggle its value
     let newCheckedValues = checked.map((checkboxState, index) => {
-      if(index === checkboxId) {
-        return !checkboxState;
-      }
-      return checkboxState;
+      return index === checkboxId ? !checkboxState : checkboxState
     });
 
     //updates the array of states using useState Hook
