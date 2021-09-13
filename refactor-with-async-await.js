@@ -1,10 +1,10 @@
 var PlayerService = {
     getPlayerTeamId: playerId => {
-        return fetch("/player/" + playerId + "/team");  //fetch returns a promise
+        return fetch(`/player/${playerId}/team`);  //fetch returns a promise
     },
 
     getPlayers: teamId => {
-        return fetch("/team/" + teamId + "/player");    //fetch returns a promise
+        return fetch(`/team/${teamId}/player`);    //fetch returns a promise
     }
 }
 
